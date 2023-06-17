@@ -1,8 +1,9 @@
-def sumOfDigits(num):
-    if num <= 0:
-        return 0
-    last = num % 10
-    num = int(num / 10)
-    return last + sumOfDigits(num)
+def sum_digits(num):
+  if (num < 10):
+    return num
+  return num % 10 + sum_digits(num // 10)
 
-print(sumOfDigits(726))
+# test cases
+print(sum_digits(12))
+print(sum_digits(552))
+print(sum_digits(123456789) == 45)
