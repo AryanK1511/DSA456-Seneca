@@ -33,6 +33,39 @@ def merge(first, second):
 
     return mix
 
-# ========== IN PLACE MERGE SORT ==========
+# ========== PYTHON SPECIFIC MERGE SORT ==========
 
-print(mergeSort([5, 2, 1, 4, 3, 7, 9, 5, 6, 9, 7, 8, 9, 4, 2, 3, 4, 5]))
+def merge_sort(items):
+  if len(items) <= 1:
+    return items
+
+  middle_index = len(items) // 2
+  left_split = items[:middle_index]
+  right_split = items[middle_index:]
+
+  left_sorted = merge_sort(left_split)
+  right_sorted = merge_sort(right_split)
+
+  return merge(left_sorted, right_sorted)
+
+def merge(left, right):
+  result = []
+
+  while (left and right):
+    if left[0] < right[0]:
+      result.append(left[0])
+      left.pop(0)
+    else:
+      result.append(right[0])
+      right.pop(0)
+
+  if left:
+    result += left
+  if right:
+    result += right
+
+  return result
+
+unordered_list1 = [356, 746, 264, 569, 949, 895, 125, 455]
+unordered_list2 = [787, 677, 391, 318, 543, 717, 180, 113, 795, 19, 202, 534, 201, 370, 276, 975, 403, 624, 770, 595, 571, 268, 373]
+unordered_list3 = [860, 380, 151, 585, 743, 542, 147, 820, 439, 865, 924, 387]
