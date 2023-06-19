@@ -41,6 +41,8 @@ These notes provide an overview of data structures and algorithms, their functio
 - LAB 0: 1/1
 - LAB 1: 1/1
 - LAB 2: 1/1
+- LAB 3: 1/1
+- LAB 4: 1/1
 
 # Disclaimer
 Please don't just copy the code mindlessly without trying to solve the problems yourself, it's totally pointless if you actually wanna learn how to write software and a blatant violation of the [Academic Integrity](https://www.senecacollege.ca/about/policies/academic-integrity-policy.html) policy of the course.
