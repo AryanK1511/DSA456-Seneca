@@ -11,10 +11,6 @@ class Node:
   
   def get_value(self):
     return self.value
-  
-from node import Node
-
-from node import Node
 
 class Queue:
   def __init__(self, max_size=None):

@@ -12,8 +12,6 @@ class Node:
   def get_value(self):
     return self.value
 
-from node import Node
-
 class Stack:
   def __init__(self, limit=1000):
     self.top_item = None
