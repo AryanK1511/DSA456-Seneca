@@ -219,13 +219,26 @@ class SelfAdjustingList:
 Perform an analysis on do_something() function with respect to the length of the string str
 ```python
 def do_recursion(str, curr):
-    if curr == len(str):                            
-        return 0                                    
-    elif str[curr] == "a":                          
-        return 1 + do_recursion(str, curr + 1)      
+    if curr == len(str):                            # 1 + 1
+        return 0                                    # 1
+    elif str[curr] == "a":                          # 1
+        return 1 + do_recursion(str, curr + 1)      # 1 + T(n - 1)
     else:
-        return do_recursion(str, curr + 1)
+        return do_recursion(str, curr + 1)          # T(n - 1)
 
 def do_something(str):
     return do_recursion(str, 0)
 ```
+- Let n represent the length of the string.
+- Let T(n) represent the number of operations required by the recursive function.
+- T(n) = 1 + 1 + 1 + 1 + T(n - 1)
+- T(n) = 4 + T(n - 1)
+- T(0) = 3
+    - This is because when the length is zero only 2 lines (3 operations) would execute and the function would return 0
+    - This is the base case
+- Simplifying our expression....
+    - T(n) = 4 + 4 + T(n - 2)
+    - T(n) = 4 + 4 + 4 + T(n - 3) and so on.....
+- Finally, T(n) = 4(n - 1) + 2
+- T(n) = 4n - 2
+- Therefore, **Time Complexity = O(n)**
