@@ -82,6 +82,19 @@ When using a singly linked list to implement a stack, is it better for insertion
 ## Q6:
 
 Describe what you will need to implement a queue using an array such that you have O(1) runtimes for enqueue() and dequeue() operations.  Do this WITHOUT using code (ie what do you need, why do you need it, but don't just code dump)
+**A)** In order to implement this kind of a queue, we need to have a singly linked list which has pointers, 'head' and 'tail' that point to the front and back of the queue (made using linked lists) respectively.
+- **Enqueue:** 
+    - In order to do this, we have to create a new node using the value being passed to the enqueue function. 
+    - Now, we check whether the tail pointer of the queue is not pointing to anything (the queue is empty). If this is the case, we update the tail and head pointers of the queue to point to the new node as that is the only node in the queue.
+    - If the queue is not empty, we have to set the next node of the new node to be empty. 
+    - Now, we set the next node of the node pointed by the tail pointer to point to the new node.
+    - After this step, we set the new tail pointer to point to the new node as that is the end of our queue now.
+- **Dequeue:** 
+    - In order to do this, we have to first check whether the queue is not empty by checking if the head pointer points to nothing.
+    - If the queue is not empty, we store the node at the head in a variable.
+    - We use the variable to get the next node after the one tha we are supposed to remove.
+    - We now set the head of the queue to point to the next node of the node to be deleted.
+    - We delete the node from the memory using the variable.
 
 ## Q7:
 
@@ -112,15 +125,104 @@ def search(self, v)
 * Function must have run time of O(n)
 * Implement two versions of this, one using sentinels and one without.
 
+### No Setinel Nodes Version
+``` python
+class SelfAdjustingList:
+    class Node:
+        def __init__(self, dat, nx, pr):
+            self.data = dat
+            self.next = nx
+            self.prev = pr
+
+    def __init__(self):
+        self.front = None
+        self.back = None
+
+    def search(self, v):
+        curr = self.front
+        while curr:
+            if curr.data == v:
+                if curr is not self.front:
+                    curr.prev.next = curr.next
+                    if curr is self.back:
+                        self.back = curr.prev
+                    else:
+                        curr.next.prev = curr.prev
+                    curr.next = self.front
+                    curr.prev = None
+                    self.front.prev = curr
+                    self.front = curr
+                return True
+            curr = curr.next
+        return False
+
+    def append(self, data):
+        new_node = self.Node(data, None, None)
+        if self.front is None:
+            self.front = new_node
+            self.back = new_node
+        else:
+            new_node.prev = self.back
+            self.back.next = new_node
+            self.back = new_node
+
+    def display(self):
+        current = self.front
+        while current:
+            print(current.data)
+            current = current.next
+```
+
+## Sentinel Nodes Version
+``` python
+class SelfAdjustingList:
+    class Node:
+        def __init__(self, dat, nx = None, pr = None):
+            self.data = dat
+            self.next = nx
+            self.prev = pr
+
+    def __init__(self):
+        self.front = self.Node(None, None, None)
+        self.back = self.Node(None, None, self.front)
+        self.front.next = self.back
+
+    def search(self, v):
+        curr = self.front.next
+        while curr is not self.back:
+            if (curr.data == v):
+                curr.prev.next = curr.next
+                curr.next.prev = curr.prev
+                curr.next = self.front.next
+                curr.prev = self.front
+                self.front.next = curr
+                return True
+            curr = curr.next
+        return False
+
+    def append(self, data):
+        nn = self.Node(data)
+        nn.prev = self.back.prev
+        nn.next = self.back
+        self.back.prev.next = nn
+        self.back.prev = nn
+
+    def display(self):
+        current = self.front.next
+        while current is not self.back:
+            print(current.data)
+            current = current.next
+```
+
 ## Q8: Recursive Analysis:
 
 Perform an analysis on do_something() function with respect to the length of the string str
 ```python
 def do_recursion(str, curr):
-    if curr == len(str):
-        return 0
-    elif str[curr] == "a":
-        return 1 + do_recursion(str, curr + 1)
+    if curr == len(str):                            
+        return 0                                    
+    elif str[curr] == "a":                          
+        return 1 + do_recursion(str, curr + 1)      
     else:
         return do_recursion(str, curr + 1)
 
